@@ -1,4 +1,5 @@
-const { test, describe, expect } = require('@playwright/test')
+// eslint-disable-next-line no-unused-vars
+const { test, describe, expect, beforeEach } = require('@playwright/test')
 
 describe('Pokedex', () => {
   test('front page can be opened', async ({ page }) => {
