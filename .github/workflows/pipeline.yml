@@ -33,14 +33,14 @@ jobs:
         run: curl -f https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.RENDER_API_KEY }}
       
       - name: Discord Webhook Notify success
-        if: ${{ success() && github.event_name == 'push' }}
+        if: ${{ always() && success() && github.event_name == 'push' }}
         uses: rjstone/discord-webhook-notify@v2.2.1
         with:
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
           title: 'A new version on Pokedex deployed'
 
       - name: Discord Webhook Notify failure
-        if: ${{ failure() && github.event_name == 'push' }}
+        if: ${{ always() && failure() && github.event_name == 'push' }}
         uses: rjstone/discord-webhook-notify@v2.2.1
         with:
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
