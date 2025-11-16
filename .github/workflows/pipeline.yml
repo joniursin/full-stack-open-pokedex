@@ -37,16 +37,17 @@ jobs:
         if: ${{ success() && github.event_name == 'push' && !contains(join(github.event.commits.*.message, ' '), '#skip') }}
         with:
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-          severity: 'info'
-          details: 'A new version on Pokedex deployed'
+          severity: info
+          details: A new version on Pokedex deployed
 
       - name: Discord Webhook Notify failure
         uses: rjstone/discord-webhook-notify@v2.2.1
-        if: ${{ failure() && github.event_name == 'push' }}
+        if: failure()
         with:
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-          severity: 'error'
-          details: 'Build failed'
+          severity: error
+          title: Build failed
+          details: commit ${{ github.event.head_commit.url }} broke the build
 
   tag_release:
     needs: [simple_deployment_pipeline]
