@@ -33,21 +33,21 @@ jobs:
         run: curl -f https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.RENDER_API_KEY }}
       
       - name: Discord Webhook Notify success
-        uses: rjstone/discord-webhook-notify@v2.2.1
-        if: ${{ success() && github.event_name == 'push' && !contains(join(github.event.commits.*.message, ' '), '#skip') }}
+        uses: stegzilla/discord-notify@v4
+        if: ${{ success() && github.ref == 'refs/heads/main' }}
         with:
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-          severity: info
-          details: A new version on Pokedex deployed
+          webhook_url: ${{ secrets.DISCORD_WEBHOOK }}
+          message: A new version on Pokedex deployed
+          colour: '3066993'  # green
 
       - name: Discord Webhook Notify failure
-        uses: rjstone/discord-webhook-notify@v2.2.1
+        uses: stegzilla/discord-notify@v4
         if: failure()
         with:
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-          severity: error
+          webhook_url: ${{ secrets.DISCORD_WEBHOOK }}
           title: Build failed
-          details: commit ${{ github.event.head_commit.url }} broke the build
+          message: commit ${{ github.sha }} broke the build
+          colour: '15158332'  # red
 
   tag_release:
     needs: [simple_deployment_pipeline]
