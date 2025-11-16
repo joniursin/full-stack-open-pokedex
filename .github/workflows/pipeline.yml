@@ -32,20 +32,20 @@ jobs:
         if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ' '), '#skip') }}
         run: curl -f https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.RENDER_API_KEY }}
       
-      - name: Discord Webhook Notify success
-        uses: sarisia/actions-status-discord@v1
-        if: success()
-        with:
-          webhook: ${{ secrets.DISCORD_WEBHOOK }}
-          title: A new version on Pokedex deployed
-
-      - name: Discord Webhook Notify failure
-        uses: sarisia/actions-status-discord@v1
-        if: failure()
-        with:
-          webhook: ${{ secrets.DISCORD_WEBHOOK }}
-          title: Build failed
-          description: commit ${{ github.sha }} broke the build
+#      - name: Discord Webhook Notify success
+#        uses: sarisia/actions-status-discord@v1
+#        if: success()
+#        with:
+#          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+#          title: A new version on Pokedex deployed
+#
+#      - name: Discord Webhook Notify failure
+#        uses: sarisia/actions-status-discord@v1
+#        if: failure()
+#        with:
+#          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+#          title: Build failed
+#          description: commit ${{ github.sha }} broke the build
 
   tag_release:
     needs: [simple_deployment_pipeline]
