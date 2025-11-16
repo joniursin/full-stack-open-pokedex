@@ -37,6 +37,7 @@ jobs:
         if: ${{ success() && github.ref == 'refs/heads/main' }}
         with:
           webhook_url: ${{ secrets.DISCORD_WEBHOOK }}
+          title: Build succeeded
           message: A new version on Pokedex deployed
           colour: '3066993'  # green
 
