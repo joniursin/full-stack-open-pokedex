@@ -37,14 +37,14 @@ jobs:
         uses: rjstone/discord-webhook-notify@v2.2.1
         with:
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-          description: 'A new wversion on Pokedex deployed'
+          title: 'A new version on Pokedex deployed'
 
       - name: Discord Webhook Notify failure
         if: ${{ failure() }}
         uses: rjstone/discord-webhook-notify@v2.2.1
         with:
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-          description: 'Build failed'
+          title: 'Build failed'
 
   tag_release:
     needs: [simple_deployment_pipeline]
